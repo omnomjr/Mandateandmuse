@@ -1,0 +1,1259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mandate and Muse – Where Rebellion Meets Reason</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Lora:ital,wght@0,400;0,500;1,400&family=Caveat:wght@500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --cream: #fdf6ec;
+  --warm-white: #fff9f2;
+  --ink: #1c1209;
+  --brown: #6b3a1f;
+  --rust: #c94f2a;
+  --pink: #e0457b;
+  --teal: #2a8a8c;
+  --gold: #d4920a;
+  --muted: #8a7060;
+  --rule: #d4c4b0;
+  --light-rule: #ede4d8;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: 'Lora', Georgia, serif;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* CURSOR */
+.cursor { width: 10px; height: 10px; background: var(--rust); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); mix-blend-mode: multiply; }
+.cursor-ring { width: 32px; height: 32px; border: 1.5px solid var(--rust); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); transition: transform 0.16s ease-out; opacity: 0.45; }
+
+/* PAPER GRAIN */
+body::before { content:''; position:fixed; inset:0; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events:none; z-index:1000; opacity:0.5; }
+
+/* ── NAV ── */
+nav {
+  position: sticky; top: 0; z-index: 500;
+  background: var(--ink);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 48px;
+  border-bottom: 3px solid var(--rust);
+  height: 60px;
+}
+.nav-brand {
+  font-family: 'Playfair Display', serif;
+  font-style: italic; font-size: 20px;
+  color: var(--cream); letter-spacing: 0.02em;
+}
+.nav-brand span { color: var(--pink); }
+.nav-links { display: flex; gap: 28px; list-style: none; }
+.nav-links a {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--rule);
+  text-decoration: none; transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--pink); }
+
+/* ── HERO ── */
+.hero {
+  min-height: 92vh;
+  display: grid;
+  grid-template-columns: 55% 45%;
+  position: relative; overflow: hidden;
+}
+
+.hero-left {
+  background: var(--ink);
+  padding: 80px 64px;
+  display: flex; flex-direction: column; justify-content: center;
+  position: relative; overflow: hidden;
+}
+.hero-left::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(transparent, transparent 28px, rgba(255,255,255,0.035) 28px, rgba(255,255,255,0.035) 29px);
+  pointer-events: none;
+}
+.hero-left::after {
+  content: '';
+  position: absolute; left: 64px; top: 0; bottom: 0;
+  width: 1px; background: rgba(201,79,42,0.25);
+  pointer-events: none;
+}
+
+.hero-eyebrow {
+  font-family: 'Caveat', cursive;
+  font-size: 19px; color: var(--teal);
+  margin-bottom: 14px;
+  animation: fadeUp 0.7s ease both;
+}
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(38px, 4.5vw, 60px);
+  font-weight: 900; color: var(--cream);
+  line-height: 1.08; margin-bottom: 6px;
+  animation: fadeUp 0.7s 0.1s ease both;
+}
+.hero-title .alt { color: var(--rust); font-style: italic; }
+.hero-subtitle {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(22px, 2.5vw, 32px);
+  font-style: italic; color: var(--pink);
+  margin-bottom: 20px;
+  animation: fadeUp 0.7s 0.18s ease both;
+}
+.hero-tagline {
+  font-family: 'Lora', serif;
+  font-size: 15px; color: var(--rule);
+  line-height: 1.7; margin-bottom: 40px;
+  max-width: 480px;
+  animation: fadeUp 0.7s 0.26s ease both;
+}
+.hero-tagline em { color: var(--pink); font-style: italic; }
+
+.hero-cta-row { display: flex; gap: 14px; flex-wrap: wrap; animation: fadeUp 0.7s 0.34s ease both; }
+.btn-primary {
+  display: inline-block;
+  background: var(--rust); color: white;
+  font-family: 'DM Mono', monospace;
+  font-size: 12px; letter-spacing: 0.09em;
+  text-transform: uppercase;
+  padding: 13px 28px; text-decoration: none;
+  cursor: none; border: 2px solid var(--rust);
+  transition: background 0.2s, color 0.2s, transform 0.15s;
+}
+.btn-primary:hover { background: var(--pink); border-color: var(--pink); transform: translateY(-2px); }
+.btn-secondary {
+  display: inline-block;
+  background: transparent; color: var(--rule);
+  font-family: 'DM Mono', monospace;
+  font-size: 12px; letter-spacing: 0.09em;
+  text-transform: uppercase;
+  padding: 13px 28px; text-decoration: none;
+  cursor: none; border: 2px solid rgba(255,255,255,0.2);
+  transition: border-color 0.2s, color 0.2s;
+}
+.btn-secondary:hover { border-color: var(--rule); color: white; }
+
+.hero-right {
+  background: var(--warm-white);
+  display: flex; flex-direction: column;
+  justify-content: center; padding: 60px 48px;
+  position: relative;
+}
+
+/* doodle floats */
+.doodle { position: absolute; font-size: 26px; opacity: 0.65; animation: float 4s ease-in-out infinite; pointer-events: none; }
+.doodle:nth-child(1) { top: 12%; left: 8%; animation-delay: 0s; }
+.doodle:nth-child(2) { top: 22%; right: 10%; animation-delay: 0.9s; font-size: 20px; }
+.doodle:nth-child(3) { bottom: 28%; left: 6%; animation-delay: 1.5s; font-size: 22px; }
+.doodle:nth-child(4) { bottom: 16%; right: 12%; animation-delay: 0.4s; }
+.doodle:nth-child(5) { top: 50%; right: 4%; animation-delay: 1.9s; font-size: 18px; }
+@keyframes float { 0%,100%{transform:translateY(0) rotate(-3deg);} 50%{transform:translateY(-12px) rotate(3deg);} }
+
+.quote-card {
+  background: white; border: 2px solid var(--ink);
+  padding: 36px 32px; position: relative;
+  box-shadow: 6px 6px 0 var(--ink);
+  animation: fadeUp 0.9s 0.2s ease both;
+}
+.quote-card::before {
+  content: '"';
+  font-family: 'Playfair Display', serif;
+  font-size: 110px; color: var(--rust);
+  opacity: 0.1; position: absolute;
+  top: -18px; left: 14px;
+  line-height: 1; pointer-events: none;
+}
+.big-quote {
+  font-family: 'Playfair Display', serif;
+  font-size: 19px; font-weight: 400;
+  line-height: 1.55; color: var(--ink);
+}
+.big-quote em {
+  font-style: italic; color: var(--pink);
+  font-size: 23px; font-weight: 700;
+  display: block; margin-top: 8px;
+}
+.quote-source {
+  font-family: 'Caveat', cursive;
+  font-size: 15px; color: var(--muted);
+  margin-top: 16px; text-align: right;
+}
+.quote-author-tag {
+  display: inline-block;
+  margin-top: 20px; padding: 8px 16px;
+  background: var(--ink); color: var(--cream);
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* ── TICKER ── */
+.ticker-wrap {
+  background: var(--rust);
+  padding: 10px 0; overflow: hidden;
+  white-space: nowrap;
+}
+.ticker {
+  display: inline-block;
+  animation: ticker 28s linear infinite;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; letter-spacing: 0.1em;
+  text-transform: uppercase; color: white;
+}
+.ticker span { margin: 0 40px; opacity: 0.7; }
+@keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* ── SECTIONS SHARED ── */
+.section-wrap { max-width: 1120px; margin: 0 auto; padding: 80px 32px; }
+.section-label {
+  font-family: 'Caveat', cursive;
+  font-size: 18px; color: var(--teal);
+  margin-bottom: 8px; display: block;
+}
+.section-heading {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(26px, 3.5vw, 40px);
+  font-weight: 700; margin-bottom: 48px;
+  line-height: 1.2;
+}
+.section-heading .accent { color: var(--rust); font-style: italic; }
+
+/* ── BLOG POSTS GRID ── */
+.posts-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.post-card {
+  background: white;
+  border: 1.5px solid var(--light-rule);
+  border-radius: 2px;
+  overflow: hidden;
+  transition: border-color 0.2s, transform 0.18s, box-shadow 0.18s;
+  cursor: none;
+}
+.post-card:hover {
+  border-color: var(--ink);
+  transform: translateY(-4px);
+  box-shadow: 5px 5px 0 var(--ink);
+}
+.post-card.featured {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.card-color-band { height: 5px; }
+.card-body { padding: 24px; }
+.featured .card-body { padding: 36px 40px; display: flex; flex-direction: column; justify-content: center; }
+
+.post-label-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+.post-category {
+  display: inline-block;
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 3px 9px; border-radius: 2px;
+}
+.cat-politics { background: #fde8e0; color: var(--rust); }
+.cat-psych { background: #e0f0f0; color: var(--teal); }
+.cat-finance { background: #fdf0d0; color: var(--gold); }
+.cat-muse { background: #fce8ef; color: var(--pink); }
+
+.post-date {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; color: var(--muted);
+  letter-spacing: 0.06em;
+}
+.post-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px; font-weight: 700;
+  line-height: 1.3; margin-bottom: 10px;
+  color: var(--ink);
+}
+.featured .post-title { font-size: 26px; }
+.post-excerpt {
+  font-family: 'Lora', serif;
+  font-size: 13.5px; color: var(--brown);
+  line-height: 1.7; margin-bottom: 18px;
+}
+.post-meta-row {
+  display: flex; align-items: center;
+  justify-content: space-between;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; color: var(--muted);
+}
+.read-link {
+  font-size: 11px; color: var(--rust);
+  letter-spacing: 0.07em; text-transform: uppercase;
+  cursor: none; border-bottom: 1px solid currentColor;
+  transition: color 0.2s;
+}
+.read-link:hover { color: var(--pink); }
+
+.card-image-block {
+  background: var(--light-rule);
+  display: flex; align-items: center;
+  justify-content: center;
+  font-size: 48px;
+  min-height: 200px;
+}
+.featured .card-image-block { min-height: 100%; }
+
+/* ── MANIFESTO SECTION ── */
+.manifesto-bg {
+  background: var(--ink);
+  position: relative; overflow: hidden;
+}
+.manifesto-bg::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(45deg, transparent, transparent 22px, rgba(255,255,255,0.015) 22px, rgba(255,255,255,0.015) 23px);
+}
+.manifesto-inner {
+  max-width: 820px; margin: 0 auto;
+  padding: 100px 32px;
+  text-align: center;
+  position: relative;
+}
+.manifesto-inner .section-label { color: var(--teal); }
+.manifesto-inner .section-heading { color: var(--cream); }
+
+.cycle-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 48px;
+}
+.cycle-cell {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  padding: 18px 20px;
+  display: flex; align-items: flex-start; gap: 12px;
+  text-align: left;
+  opacity: 0; transform: translateY(16px);
+  transition: opacity 0.45s, transform 0.45s;
+}
+.cycle-cell.visible { opacity: 1; transform: translateY(0); }
+.cycle-icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
+.cycle-text {
+  font-family: 'Lora', serif;
+  font-size: 14px; line-height: 1.6;
+  color: var(--rule);
+}
+.cycle-text strong { color: var(--cream); }
+
+.manifesto-pivot {
+  background: rgba(224, 69, 123, 0.12);
+  border: 1px solid rgba(224,69,123,0.3);
+  border-left: 4px solid var(--pink);
+  padding: 32px 36px;
+  font-family: 'Lora', serif;
+  font-size: 17px; line-height: 1.85;
+  color: var(--rule);
+  text-align: left; margin-bottom: 36px;
+}
+.manifesto-pivot strong {
+  font-family: 'Playfair Display', serif;
+  font-style: italic; color: var(--pink); font-size: 21px;
+}
+
+.closing-cards {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+}
+.closing-card {
+  padding: 28px 24px; border: 1px solid rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.04);
+  font-family: 'Playfair Display', serif;
+  font-style: italic; font-size: 17px;
+  line-height: 1.5; color: var(--rule);
+  text-align: left;
+  transition: border-color 0.2s, background 0.2s;
+}
+.closing-card:hover { border-color: var(--pink); background: rgba(224,69,123,0.08); }
+.closing-card .clabel {
+  font-family: 'DM Mono', monospace;
+  font-style: normal; font-size: 9px;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 10px; display: block;
+}
+.closing-card .pink { color: var(--pink); }
+
+/* ── CATEGORIES STRIP ── */
+.categories-strip {
+  background: var(--brown);
+  padding: 64px 32px;
+}
+.cat-grid {
+  max-width: 1120px; margin: 0 auto;
+  display: grid; grid-template-columns: repeat(4,1fr); gap: 16px;
+}
+.cat-block {
+  padding: 28px 24px;
+  display: flex; flex-direction: column; gap: 10px;
+  cursor: none; transition: transform 0.18s;
+  border: 1.5px solid rgba(255,255,255,0.15);
+}
+.cat-block:hover { transform: translateY(-4px); }
+.cat-block.c1 { background: rgba(201,79,42,0.3); }
+.cat-block.c2 { background: rgba(42,138,140,0.3); }
+.cat-block.c3 { background: rgba(212,146,10,0.3); }
+.cat-block.c4 { background: rgba(224,69,123,0.3); }
+
+.cat-block-icon { font-size: 28px; }
+.cat-block-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px; font-weight: 700;
+  color: white;
+}
+.cat-block-desc {
+  font-family: 'Lora', serif;
+  font-size: 12.5px; color: rgba(255,255,255,0.7);
+  line-height: 1.6;
+}
+.cat-block-count {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.45);
+  margin-top: auto;
+}
+
+/* ── POETRY SPOTLIGHT ── */
+.poetry-section {
+  background: var(--warm-white);
+  padding: 80px 32px;
+}
+.poetry-inner {
+  max-width: 1120px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start;
+}
+.poem-card {
+  background: white;
+  border: 2px solid var(--ink);
+  box-shadow: 6px 6px 0 var(--ink);
+  padding: 40px 36px; position: relative;
+  overflow: hidden;
+}
+.poem-card::after {
+  content: '✦';
+  position: absolute; top: 16px; right: 20px;
+  font-size: 32px; color: var(--light-rule);
+}
+.poem-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px; font-style: italic;
+  margin-bottom: 20px; color: var(--ink);
+}
+.poem-lines {
+  font-family: 'Lora', serif;
+  font-size: 14.5px; line-height: 2;
+  color: var(--brown);
+  border-left: 3px solid var(--pink);
+  padding-left: 18px;
+  margin-bottom: 20px;
+}
+.poem-lines em { font-style: italic; color: var(--ink); }
+.poem-footer {
+  display: flex; justify-content: space-between; align-items: center;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; color: var(--muted);
+  letter-spacing: 0.07em; text-transform: uppercase;
+  border-top: 1px solid var(--light-rule); padding-top: 14px;
+}
+
+.poetry-info { display: flex; flex-direction: column; gap: 24px; justify-content: center; }
+.poetry-info .section-heading { margin-bottom: 16px; }
+.poetry-info p {
+  font-family: 'Lora', serif;
+  font-size: 15px; line-height: 1.8;
+  color: var(--brown);
+}
+.poem-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.poem-tag {
+  padding: 5px 12px;
+  background: var(--light-rule);
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; letter-spacing: 0.07em;
+  text-transform: uppercase; color: var(--brown);
+  border-radius: 2px;
+}
+
+/* ── ABOUT STRIP ── */
+.about-strip {
+  background: var(--cream);
+  padding: 80px 32px;
+  border-top: 1.5px solid var(--light-rule);
+}
+.about-inner {
+  max-width: 1120px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 64px; align-items: center;
+}
+.about-badge {
+  background: var(--ink);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 80px; height: 260px;
+  border: 3px solid var(--rust);
+  box-shadow: 8px 8px 0 var(--rust);
+  position: relative;
+}
+.about-badge::after {
+  content: 'Mandate & Muse';
+  position: absolute; bottom: -14px; left: 20px;
+  background: var(--pink); color: white;
+  font-family: 'Playfair Display', serif;
+  font-style: italic; font-size: 13px;
+  padding: 4px 14px;
+}
+
+.about-text .section-label { margin-bottom: 8px; }
+.about-text h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(26px, 3vw, 38px);
+  font-weight: 700; margin-bottom: 20px; line-height: 1.2;
+}
+.about-text h2 em { color: var(--rust); font-style: italic; }
+.about-text p {
+  font-family: 'Lora', serif;
+  font-size: 15px; line-height: 1.85;
+  color: var(--brown); margin-bottom: 14px;
+}
+.about-text .tagline-quote {
+  border-left: 4px solid var(--teal);
+  padding: 12px 20px;
+  background: var(--warm-white);
+  font-family: 'Playfair Display', serif;
+  font-style: italic; font-size: 17px;
+  color: var(--ink); margin: 20px 0;
+}
+
+/* ── CTA BANNER ── */
+.cta-banner {
+  background: var(--brown); padding: 90px 32px;
+  text-align: center; position: relative; overflow: hidden;
+}
+.cta-banner::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(255,255,255,0.02) 20px, rgba(255,255,255,0.02) 21px);
+}
+.cta-eyebrow {
+  font-family: 'Caveat', cursive;
+  font-size: 22px; color: var(--teal);
+  margin-bottom: 14px; position: relative;
+}
+.cta-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(30px, 4.5vw, 52px);
+  font-weight: 900; color: var(--cream);
+  margin-bottom: 12px; position: relative; line-height: 1.15;
+}
+.cta-title em { font-style: italic; color: var(--pink); }
+.cta-sub {
+  font-family: 'Lora', serif;
+  font-size: 16px; color: var(--rule);
+  margin-bottom: 40px; position: relative;
+}
+.cta-url {
+  display: inline-block;
+  font-family: 'Playfair Display', serif;
+  font-style: italic; font-size: 22px;
+  color: var(--pink); border-bottom: 2px solid var(--pink);
+  padding-bottom: 4px; text-decoration: none;
+  position: relative; transition: color 0.2s;
+}
+.cta-url:hover { color: var(--cream); border-bottom-color: var(--cream); }
+.cta-sign {
+  margin-top: 48px; position: relative;
+  display: inline-block;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.15);
+  padding: 20px 32px;
+  max-width: 640px;
+}
+.cta-sign p {
+  font-family: 'Lora', serif;
+  font-size: 14px; color: var(--rule);
+  line-height: 1.8; font-style: italic;
+}
+.cta-sign .sig {
+  font-family: 'Caveat', cursive;
+  font-size: 20px; color: var(--pink);
+  margin-top: 12px; display: block; text-align: right;
+}
+
+/* ── FOOTER ── */
+footer {
+  background: var(--ink);
+  padding: 32px 48px;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 16px;
+}
+.footer-brand {
+  font-family: 'Playfair Display', serif;
+  font-style: italic; font-size: 20px; color: var(--cream);
+}
+.footer-links { display: flex; gap: 24px; }
+.footer-links a {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--muted);
+  text-decoration: none; transition: color 0.2s;
+}
+.footer-links a:hover { color: var(--pink); }
+.footer-note {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; color: var(--muted);
+  letter-spacing: 0.05em; text-align: center;
+  width: 100%;
+  border-top: 1px solid rgba(255,255,255,0.07);
+  padding-top: 20px; margin-top: 8px;
+}
+
+/* ── NEWSLETTER ── */
+.newsletter-section {
+  background: var(--cream);
+  padding: 0 32px 80px;
+  position: relative;
+}
+.newsletter-inner {
+  max-width: 1120px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border: 2.5px solid var(--ink);
+  box-shadow: 8px 8px 0 var(--rust);
+  overflow: hidden;
+  position: relative;
+}
+.nl-left {
+  background: var(--ink);
+  padding: 64px 56px;
+  position: relative; overflow: hidden;
+}
+.nl-left::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(transparent, transparent 28px, rgba(255,255,255,0.03) 28px, rgba(255,255,255,0.03) 29px);
+}
+.nl-left::after {
+  content: '✉';
+  position: absolute; right: -20px; bottom: -20px;
+  font-size: 160px; opacity: 0.04; color: white;
+  line-height: 1; pointer-events: none;
+}
+.nl-eyebrow {
+  font-family: 'Caveat', cursive;
+  font-size: 20px; color: var(--teal);
+  margin-bottom: 14px; position: relative;
+}
+.nl-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(26px, 3vw, 38px);
+  font-weight: 900; color: var(--cream);
+  line-height: 1.15; margin-bottom: 18px;
+  position: relative;
+}
+.nl-title em { color: var(--pink); font-style: italic; }
+.nl-desc {
+  font-family: 'Lora', serif;
+  font-size: 14.5px; color: var(--rule);
+  line-height: 1.8; margin-bottom: 28px;
+  position: relative;
+}
+.nl-perks {
+  display: flex; flex-direction: column; gap: 10px;
+  position: relative;
+}
+.nl-perk {
+  display: flex; align-items: center; gap: 12px;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; letter-spacing: 0.07em;
+  text-transform: uppercase; color: var(--rule);
+}
+.nl-perk-dot {
+  width: 24px; height: 24px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; flex-shrink: 0;
+}
+.nl-perk-dot.p { background: rgba(224,69,123,0.2); }
+.nl-perk-dot.t { background: rgba(42,138,140,0.2); }
+.nl-perk-dot.g { background: rgba(212,146,10,0.2); }
+.nl-perk-dot.r { background: rgba(201,79,42,0.2); }
+
+.nl-right {
+  background: var(--warm-white);
+  padding: 64px 56px;
+  display: flex; flex-direction: column; justify-content: center;
+}
+.nl-form-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--muted);
+  margin-bottom: 6px; display: block;
+}
+.nl-input {
+  width: 100%;
+  font-family: 'Lora', serif;
+  font-size: 15px; color: var(--ink);
+  background: white;
+  border: 1.5px solid var(--rule);
+  padding: 14px 18px;
+  margin-bottom: 16px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  cursor: none;
+}
+.nl-input:focus { border-color: var(--rust); box-shadow: 3px 3px 0 var(--rust); }
+.nl-input::placeholder { color: var(--rule); }
+.nl-submit {
+  width: 100%;
+  background: var(--rust); color: white;
+  font-family: 'DM Mono', monospace;
+  font-size: 12px; letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 16px 28px; border: 2px solid var(--rust);
+  cursor: none; transition: background 0.2s, transform 0.15s;
+  margin-bottom: 20px;
+}
+.nl-submit:hover { background: var(--pink); border-color: var(--pink); transform: translateY(-2px); }
+.nl-privacy {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; color: var(--muted);
+  letter-spacing: 0.05em; line-height: 1.6;
+  text-align: center;
+}
+.nl-sameeksha-note {
+  margin-top: 28px;
+  background: white;
+  border-left: 3px solid var(--pink);
+  padding: 16px 20px;
+}
+.nl-sameeksha-note p {
+  font-family: 'Lora', serif;
+  font-style: italic; font-size: 13px;
+  color: var(--brown); line-height: 1.7;
+}
+.nl-sameeksha-note .note-sig {
+  font-family: 'Caveat', cursive;
+  font-size: 17px; color: var(--pink);
+  margin-top: 8px; display: block;
+}
+.nl-success {
+  display: none;
+  text-align: center; padding: 32px 20px;
+}
+.nl-success .success-icon { font-size: 48px; margin-bottom: 16px; }
+.nl-success h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px; font-weight: 700;
+  margin-bottom: 10px;
+}
+.nl-success p {
+  font-family: 'Lora', serif;
+  font-size: 14px; color: var(--brown); line-height: 1.7;
+}
+
+/* ANIMATIONS */
+@keyframes fadeUp { from{opacity:0;transform:translateY(22px);} to{opacity:1;transform:translateY(0);} }
+
+.nl-chip {
+  padding: 10px 14px;
+  border: 1.5px solid var(--rule);
+  background: white;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; letter-spacing: 0.06em;
+  text-align: center; cursor: none;
+  transition: all 0.18s; color: var(--brown);
+  user-select: none;
+}
+.nl-chip:hover { border-color: var(--rust); color: var(--rust); }
+.nl-chip.active { background: var(--rust); color: white; border-color: var(--rust); }
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .hero { grid-template-columns:1fr; min-height:auto; }
+  .newsletter-inner { grid-template-columns:1fr; }
+  .nl-left { padding:48px 28px; }
+  .nl-right { padding:48px 28px; }
+  .posts-grid { grid-template-columns:1fr; }
+  .cycle-grid { grid-template-columns:1fr; }
+  .closing-cards { grid-template-columns:1fr; }
+  .cat-grid { grid-template-columns:1fr 1fr; }
+  .poetry-inner { grid-template-columns:1fr; }
+  .about-inner { grid-template-columns:1fr; }
+  nav { padding:0 20px; }
+  .nav-links { gap:14px; }
+}
+@media(max-width:540px){
+  .cat-grid { grid-template-columns:1fr; }
+  footer { flex-direction:column; text-align:center; }
+  .footer-links { flex-wrap:wrap; justify-content:center; }
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">Mandate <span>&</span> Muse</div>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="#posts">Blog</a></li>
+    <li><a href="#categories">Topics</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#newsletter" style="color:var(--pink)">Subscribe</a></li>
+    <li><a href="https://mandateandmuse.com">mandateandmuse.com</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">✏️ Kerala, India · Writing at 3AM, always.</div>
+    <h1 class="hero-title">Perpetually in <span class="alt">Exam Mode</span></h1>
+    <p class="hero-subtitle">but Secretly a Blogger.</p>
+    <p class="hero-tagline">
+      Where <em>rebellion meets reason</em>, and every word is a spark —
+      challenging norms, unveiling truths, and guiding minds toward a bolder, more beautiful world.
+    </p>
+    <div class="hero-cta-row">
+      <a href="#posts" class="btn-primary">Read the Blog →</a>
+      <a href="#about" class="btn-secondary">Meet Sameeksha</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="doodle">⏰</div>
+    <div class="doodle">☁️</div>
+    <div class="doodle">📚</div>
+    <div class="doodle">☕</div>
+    <div class="doodle">❓</div>
+
+    <div class="quote-card">
+      <p class="big-quote">
+        "Some people live in the present.
+        <em>I live in the syllabus."</em>
+      </p>
+      <p class="quote-source">— The Blogger Behind the Books</p>
+      <div class="quote-author-tag">By Sameeksha · mandateandmuse.com</div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker">
+    Politics: Ripped & Real <span>✦</span> Psychology of Chaos <span>✦</span> Muse in Motion <span>✦</span> Humor in Finance <span>✦</span> Challenging Norms <span>✦</span> Unveiling Truths <span>✦</span> Kerala, India <span>✦</span> Written with caffeine & mild existential crises <span>✦</span> Politics: Ripped & Real <span>✦</span> Psychology of Chaos <span>✦</span> Muse in Motion <span>✦</span> Humor in Finance <span>✦</span> Challenging Norms <span>✦</span> Unveiling Truths <span>✦</span> Kerala, India <span>✦</span> Written with caffeine & mild existential crises <span>✦</span>
+  </div>
+</div>
+
+<!-- BLOG POSTS -->
+<section id="posts">
+  <div class="section-wrap">
+    <span class="section-label">From the Archive</span>
+    <h2 class="section-heading">Stories worth <span class="accent">your attention.</span></h2>
+
+    <div class="posts-grid">
+
+      <!-- Featured: India's Therapy Aesthetic -->
+      <div class="post-card featured">
+        <div class="card-image-block" style="background:#e0f0f0; font-size:64px;">🧠</div>
+        <div class="card-body">
+          <div class="card-color-band" style="background:var(--teal); width:48px; height:4px; margin-bottom:18px;"></div>
+          <div class="post-label-row">
+            <span class="post-category cat-psych">Psychology of Chaos</span>
+            <span class="post-date">Oct 10, 2025 · World Mental Health Day</span>
+          </div>
+          <h3 class="post-title">India's Therapy Aesthetic</h3>
+          <p class="post-excerpt">
+            My timeline is flooded with pastel quotes and "be kind to your mind" messages — so let's talk about how India actually views mental health. We've leapfrogged from "log kya kahenge" to "look what my therapist said today" in record time. Is this a cultural awakening, or another rehashing of Western trends?
+          </p>
+          <div class="post-meta-row">
+            <span>By Sameeksha · 9 comments</span>
+            <span class="read-link">Read Full Post →</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Exam-pocalypse Now -->
+      <div class="post-card">
+        <div class="card-color-band" style="background:var(--teal);"></div>
+        <div class="card-image-block" style="background:#e8f5e8; min-height:140px; font-size:44px;">📈</div>
+        <div class="card-body">
+          <div class="post-label-row">
+            <span class="post-category cat-psych">Psychology of Chaos</span>
+            <span class="post-date">May 31, 2025</span>
+          </div>
+          <h3 class="post-title">Exam-pocalypse Now</h3>
+          <p class="post-excerpt">
+            UPSC, NEET, JEE — and the society that turned them into a religion. I failed spectacularly in some, cried over marks, questioned my worth. Here's an unmasking of the absurd pedestal we've put national entrance exams on.
+          </p>
+          <div class="post-meta-row">
+            <span>4 comments</span>
+            <a href="post1.html" class="read-link">Read →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Breaking News, Broken Ethics -->
+      <div class="post-card">
+        <div class="card-color-band" style="background:var(--rust);"></div>
+        <div class="card-image-block" style="background:#fde8e0; min-height:140px; font-size:44px;">📺</div>
+        <div class="card-body">
+          <div class="post-label-row">
+            <span class="post-category cat-politics">Politics: Ripped & Real</span>
+            <span class="post-date">Apr 6, 2025</span>
+          </div>
+          <h3 class="post-title">Breaking News, Broken Ethics</h3>
+          <p class="post-excerpt">
+            "Breaking: Actor's dog gets a haircut. Meanwhile, Parliament passes a bill that impacts 600 million lives." Journalism today is choreographed, not reported — here's my guide to surviving the propaganda machine.
+          </p>
+          <div class="post-meta-row">
+            <span>5 comments</span>
+            <a href="post2.html" class="read-link">Read →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Anatomy of Inequality -->
+      <div class="post-card">
+        <div class="card-color-band" style="background:var(--rust);"></div>
+        <div class="card-image-block" style="background:#fde8e0; min-height:140px; font-size:44px;">🏥</div>
+        <div class="card-body">
+          <div class="post-label-row">
+            <span class="post-category cat-politics">Politics: Ripped & Real</span>
+            <span class="post-date">Jul 6, 2025 · Kerala</span>
+          </div>
+          <h3 class="post-title">The Anatomy of Inequality</h3>
+          <p class="post-excerpt">
+            I found this thought standing between two hospitals — literally adjacent, same road, same air. On one side: a five-star resort of a clinic. On the other: rust on stretchers and lost hope. Two Indias. One road.
+          </p>
+          <div class="post-meta-row">
+            <span>7 comments</span>
+            <a href="post3.html" class="read-link">Read →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Finance over Fiancé -->
+      <div class="post-card">
+        <div class="card-color-band" style="background:var(--gold);"></div>
+        <div class="card-image-block" style="background:#fdf0d0; min-height:140px; font-size:44px;">💸</div>
+        <div class="card-body">
+          <div class="post-label-row">
+            <span class="post-category cat-finance">Humor in Finance</span>
+            <span class="post-date">Apr 19, 2025</span>
+          </div>
+          <h3 class="post-title">Fiancé? Finance? Let's Fix One First.</h3>
+          <p class="post-excerpt">
+            Hi, I'm Sameeksha — professionally broke in both love and finance. The world seems busy making fiancés while I struggle to even spell it. So: SIPs, PPFs, FDs, and a ₹30,000 salary breakdown for the broke soul edition.
+          </p>
+          <div class="post-meta-row">
+            <span>3 comments</span>
+            <a href="post4.html" class="read-link">Read →</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- MANIFESTO -->
+<section class="manifesto-bg" id="manifesto">
+  <div class="manifesto-inner">
+    <span class="section-label">The Eternal Exam Cycle</span>
+    <h2 class="section-heading" style="color:var(--cream);">This is what my <span class="accent">calendar</span> looks like.</h2>
+
+    <div class="cycle-grid" id="cycleGrid">
+      <div class="cycle-cell"><div class="cycle-icon">📝</div><div class="cycle-text">If I'm not writing an exam, I'm <strong>healing</strong> from one.</div></div>
+      <div class="cycle-cell"><div class="cycle-icon">🔍</div><div class="cycle-text">If I'm not healing, I'm <strong>analyzing</strong> one.</div></div>
+      <div class="cycle-cell"><div class="cycle-icon">😔</div><div class="cycle-text">If I'm not analyzing, I'm <strong>regretting</strong> one.</div></div>
+      <div class="cycle-cell"><div class="cycle-icon">📖</div><div class="cycle-text">If I'm not regretting, I'm <strong>preparing</strong> for one.</div></div>
+      <div class="cycle-cell"><div class="cycle-icon">😱</div><div class="cycle-text">If I'm not preparing, I'm <strong>panicking</strong> about one.</div></div>
+      <div class="cycle-cell"><div class="cycle-icon">⏱️</div><div class="cycle-text">If I'm not panicking, I'm realizing I'm <strong>late</strong> for one.</div></div>
+      <div class="cycle-cell" style="grid-column:1/-1; justify-content:center;"><div class="cycle-icon">🔄</div><div class="cycle-text" style="max-width:400px;">If I'm not late, I'm <strong>refreshing the portal</strong> waiting for one.</div></div>
+    </div>
+
+    <div class="manifesto-pivot">
+      And if I'm not doing <em style="font-style:italic; color:var(--cream);">any</em> of that —<br>
+      I'm writing on <strong>Mandate and Muse.</strong><br><br>
+      Because apparently, I either answer exam questions,<br>or question the system.
+    </div>
+
+    <div class="closing-cards">
+      <div class="closing-card">
+        <span class="clabel">In the exam hall</span>
+        "I survive in exam halls."
+      </div>
+      <div class="closing-card">
+        <span class="clabel">On this blog</span>
+        "But I exist on <span class="pink">Mandate and Muse.</span>"
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CATEGORIES -->
+<section class="categories-strip" id="categories">
+  <div style="max-width:1120px;margin:0 auto 32px;display:flex;align-items:baseline;justify-content:space-between;">
+    <div>
+      <span class="section-label" style="color:rgba(255,255,255,0.5);">What you'll find here</span>
+      <h2 class="section-heading" style="color:white; margin-bottom:0;">Four worlds. <span style="color:var(--pink);font-style:italic;">One voice.</span></h2>
+    </div>
+  </div>
+  <div class="cat-grid">
+    <div class="cat-block c1">
+      <div class="cat-block-icon">🗳️</div>
+      <div class="cat-block-name">Politics: Ripped & Real</div>
+      <div class="cat-block-desc">No bootlicking. No prime-time theatre. Just the uncomfortable questions the mainstream won't ask.</div>
+      <div class="cat-block-count">2 posts · Democracy with spine</div>
+    </div>
+    <div class="cat-block c2">
+      <div class="cat-block-icon">🧠</div>
+      <div class="cat-block-name">Psychology of Chaos</div>
+      <div class="cat-block-desc">Therapy trends, exam stress, emotional capitalism, and the mess of living in your own head.</div>
+      <div class="cat-block-count">2 posts · Mind unmuted</div>
+    </div>
+    <div class="cat-block c3">
+      <div class="cat-block-icon">💰</div>
+      <div class="cat-block-name">Humor in Finance</div>
+      <div class="cat-block-desc">Broke but learning. SIPs, PPFs, and a ₹30K salary breakdown with maximum sarcasm included.</div>
+      <div class="cat-block-count">1 post · Finance &gt; Fiancé</div>
+    </div>
+    <div class="cat-block c4">
+      <div class="cat-block-icon">✍️</div>
+      <div class="cat-block-name">Muse in Motion</div>
+      <div class="cat-block-desc">Poetry for the heartbroken, the regretful, and the girl who fell for the same story twice.</div>
+      <div class="cat-block-count">2 poems · Heart on page</div>
+    </div>
+  </div>
+</section>
+
+<!-- POETRY SPOTLIGHT -->
+<section class="poetry-section" id="poetry">
+  <div class="poetry-inner">
+    <div class="poem-card">
+      <h3 class="poem-title">Love in Rewind</h3>
+      <div class="poem-lines">
+        I had him once,<br>
+        not in promises, not in forever,<br>
+        but in the quiet way he showed up —<br>
+        every ping, every concern,<br>
+        <em>a presence I mistook for permanence.</em><br><br>
+        He left,<br>
+        not with anger,<br>
+        but with a silence sharp enough<br>
+        to slice through my arrogance.<br><br>
+        I was nineteen then,<br>
+        I am twenty-five now.<br>
+        And yet, with him,<br>
+        <em>time folds in half.</em>
+      </div>
+      <div class="poem-footer">
+        <span>Muse in Motion</span>
+        <span>Sept 14, 2025 · 15 comments</span>
+      </div>
+    </div>
+
+    <div class="poetry-info">
+      <div>
+        <span class="section-label">Muse in Motion</span>
+        <h2 class="section-heading">Poetry that <span class="accent">bleeds</span> honestly.</h2>
+        <p>From falling for the same person twice to pressing "Delete for Everyone" on a message that wasn't just a "hey" — Sameeksha's poetry is half confession, half comedy, and entirely human.</p>
+        <p style="margin-top:14px;">She writes the words most of us only think at 2AM.</p>
+      </div>
+      <div class="poem-tags">
+        <span class="poem-tag">Love</span>
+        <span class="poem-tag">Regret</span>
+        <span class="poem-tag">Heartbreak</span>
+        <span class="poem-tag">Growth</span>
+        <span class="poem-tag">Kerala</span>
+        <span class="poem-tag">Identity</span>
+      </div>
+      <div class="poem-card" style="box-shadow:4px 4px 0 var(--rust); border-color:var(--rust);">
+        <h3 class="poem-title" style="font-size:18px;">Delete For Everyone</h3>
+        <div class="poem-lines" style="font-size:13.5px;">
+          I sent it...<br>
+          Just a "hey."<br>
+          <em>Strange — how three letters<br>
+          can feel like one confession<br>
+          wrapped in regret.</em><br><br>
+          Delete for everyone...<br>
+          But the guilt stays mine.
+        </div>
+        <div class="poem-footer">
+          <span>May 11, 2025</span>
+          <span>5 comments</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about-strip" id="about">
+  <div class="about-inner">
+    <div class="about-badge">👩‍💻</div>
+    <div class="about-text">
+      <span class="section-label">Meet the voice behind it</span>
+      <h2>Hi, I'm <em>Sameeksha.</em></h2>
+      <div class="tagline-quote">
+        "Some worship power, some cling to love — I stand at the fault lines where both collapse. I dissect illusions, not to destroy them, but to see what survives."
+      </div>
+      <p>A seeker of cracks, a collector of contradictions. I write about politics, psychology, poetry and personal finance — sometimes in the same breath, always with caffeine in hand.</p>
+      <p>I failed exams spectacularly. I wrote poems about the same man twice. I made a guide to surviving India's broken news cycle. And I'm <em>still here</em>, thriving in my own chaotic little way — still trying to survive without turning into a sob story.</p>
+      <p style="margin-top:4px;"><strong>Written with caffeine and a mild existential crisis.</strong> Still broke, a little bruised, but burning bright.</p>
+      <div style="display:flex;gap:12px;margin-top:24px;flex-wrap:wrap;">
+        <a href="https://mandateandmuse.com" class="btn-primary" style="font-size:11px; padding:11px 22px;">Visit the Blog</a>
+        <a href="#" class="btn-secondary" style="font-size:11px; padding:11px 22px; border-color:var(--rule); color:var(--brown);">Let's Talk</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<section class="cta-banner">
+  <div class="cta-eyebrow">See me without the syllabus.</div>
+  <h2 class="cta-title">The person behind<br>the <em>academic persona.</em></h2>
+  <p class="cta-sub">Visit the blog to witness what happens when the books close.</p>
+  <a href="https://mandateandmuse.com" class="cta-url">mandateandmuse.com</a>
+
+  <div style="display:flex;justify-content:center;margin-top:32px;">
+    <div class="cta-sign">
+      <p>No godfather. No god complex. Just an eye for bullshit, a pen that bites and a refusal to clap for clowns in power suits. No press badge or blue tick — just guts, Google and a grudge against lazy journalism.</p>
+      <span class="sig">— Sameeksha, Mandate and Muse ✦</span>
+    </div>
+  </div>
+
+  <div style="margin-top:40px;font-family:'Caveat',cursive;font-size:24px;color:var(--gold);position:relative;">Please do read. 🙏</div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="newsletter-section" id="newsletter">
+  <div class="newsletter-inner">
+    <div class="nl-left">
+      <div class="nl-eyebrow">📬 No spam. Only sparks.</div>
+      <h2 class="nl-title">Get the chaos<br>delivered to your<br><em>inbox.</em></h2>
+      <p class="nl-desc">Politics that bites. Psychology that hits home. Poetry at 2AM. Finance tips from someone who's also broke. And the occasional existential crisis — wrapped in sarcasm and served with chai.</p>
+      <div class="nl-perks">
+        <div class="nl-perk"><div class="nl-perk-dot p">🗳️</div><span>Raw politics — no prime-time theatre</span></div>
+        <div class="nl-perk"><div class="nl-perk-dot t">🧠</div><span>Psychology of living in your own head</span></div>
+        <div class="nl-perk"><div class="nl-perk-dot g">💸</div><span>Finance for the professionally broke</span></div>
+        <div class="nl-perk"><div class="nl-perk-dot r">✍️</div><span>Poetry half confession, half comedy</span></div>
+      </div>
+    </div>
+
+    <div class="nl-right">
+      <div id="nlForm">
+        <label class="nl-form-label" for="nlName">Your name</label>
+        <input class="nl-input" id="nlName" type="text" placeholder="What do I call you?" autocomplete="off">
+
+        <label class="nl-form-label" for="nlEmail">Your email address</label>
+        <input class="nl-input" id="nlEmail" type="email" placeholder="your@email.com" autocomplete="off">
+
+        <label class="nl-form-label">What are you here for?</label>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px;">
+          <div class="nl-chip" onclick="toggleChip(this)">🗳️ Politics</div>
+          <div class="nl-chip" onclick="toggleChip(this)">🧠 Psychology</div>
+          <div class="nl-chip" onclick="toggleChip(this)">💸 Finance</div>
+          <div class="nl-chip" onclick="toggleChip(this)">✍️ Poetry</div>
+        </div>
+
+        <button class="nl-submit" onclick="submitNewsletter()">Subscribe — It's Free ✦</button>
+        <p class="nl-privacy">No spam. No algorithms. Just Sameeksha, writing at odd hours,<br>sending you words that actually mean something.</p>
+
+        <div class="nl-sameeksha-note">
+          <p>"I write late, I publish messy, and I overthink everything before I hit send — but I promise every email will be worth your scroll."</p>
+          <span class="note-sig">— Sameeksha ✦</span>
+        </div>
+      </div>
+
+      <div class="nl-success" id="nlSuccess">
+        <div class="success-icon">💌</div>
+        <h3>You're in, <span id="successName" style="color:var(--pink);font-style:italic;"></span>!</h3>
+        <p>Welcome to the chaos. Expect words that challenge, poems that sting, and finance tips from someone equally broke. Watch your inbox — Sameeksha's on her way.</p>
+        <div style="margin-top:20px;font-family:'Caveat',cursive;font-size:20px;color:var(--teal);">"At times the soul speaks loudest when the world is not listening." 💫</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">Mandate & Muse</div>
+  <div class="footer-links">
+    <a href="#">Home</a>
+    <a href="#posts">Blog</a>
+    <a href="#categories">Topics</a>
+    <a href="#about">About</a>
+    <a href="#">Privacy Policy</a>
+    <a href="mailto:sameekshaneuro630@gmail.com" class="btn-secondary">Let's Talk</a>
+  </div>
+  <div class="footer-note">
+    © 2025 Mandate and Muse · Written between syllabi. Read between the lines. ·
+    "If you steal my words, at least steal my sarcasm too."
+  </div>
+</footer>
+
+<script>
+  // Custom cursor
+  const cur = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove', e=>{ mx=e.clientX; my=e.clientY; });
+  (function anim(){
+    cur.style.left=mx+'px'; cur.style.top=my+'px';
+    rx+=(mx-rx)*0.13; ry+=(my-ry)*0.13;
+    ring.style.left=rx+'px'; ring.style.top=ry+'px';
+    requestAnimationFrame(anim);
+  })();
+
+  // Topic chip toggle
+  function toggleChip(el) { el.classList.toggle('active'); }
+
+  // Newsletter submit
+  function submitNewsletter() {
+    const name = document.getElementById('nlName').value.trim();
+    const email = document.getElementById('nlEmail').value.trim();
+    if (!name || !email) {
+      const input = !name ? document.getElementById('nlName') : document.getElementById('nlEmail');
+      input.style.borderColor = 'var(--pink)';
+      input.style.boxShadow = '3px 3px 0 var(--pink)';
+      input.focus();
+      setTimeout(() => { input.style.borderColor = ''; input.style.boxShadow = ''; }, 1800);
+      return;
+    }
+    document.getElementById('successName').textContent = name;
+    document.getElementById('nlForm').style.display = 'none';
+    const s = document.getElementById('nlSuccess');
+    s.style.display = 'block';
+    s.style.animation = 'fadeUp 0.5s ease both';
+  }
+  const cells = document.querySelectorAll('.cycle-cell');
+  const obs = new IntersectionObserver(entries=>{
+    entries.forEach((e,i)=>{
+      if(e.isIntersecting){
+        setTimeout(()=>e.target.classList.add('visible'), i*80);
+      }
+    });
+  }, {threshold:0.2});
+  cells.forEach(c=>obs.observe(c));
+</script>
+</body>
+</html>
